@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Screen, Activity, User } from '../types';
 import { ICONS } from '../constants';
-import { MockApiService } from '../services/mockApi';
+import { ApiService } from '../services/apiService';
 
 interface Props {
   onNavigate: (screen: Screen) => void;
@@ -13,17 +13,15 @@ const Home: React.FC<Props> = ({ onNavigate }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
-    MockApiService.fetchHomeData().then(setData);
+    ApiService.fetchHomeData().then(setData);
   }, []);
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => {
-      MockApiService.fetchHomeData().then((newData) => {
-        setData(newData);
-        setIsRefreshing(false);
-      });
-    }, 1000);
+    ApiService.fetchHomeData().then((newData) => {
+      setData(newData);
+      setTimeout(() => setIsRefreshing(false), 800);
+    });
   };
 
   if (!data) return (
@@ -34,7 +32,7 @@ const Home: React.FC<Props> = ({ onNavigate }) => {
           <ICONS.Sparkles size={24} />
         </div>
       </div>
-      <p className="mt-6 font-black uppercase tracking-[0.3em] text-[10px]">Submerging...</p>
+      <p className="mt-6 font-black uppercase tracking-[0.3em] text-[10px]">Initializing Eco-Ecosystem...</p>
     </div>
   );
 
@@ -49,7 +47,7 @@ const Home: React.FC<Props> = ({ onNavigate }) => {
             <div className="animate-in slide-in-from-left duration-500">
               <div className="flex items-center space-x-2 mb-1">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_#34d399]" />
-                <p className="text-cyan-300 text-[10px] font-black uppercase tracking-[0.4em]">Guardian Status</p>
+                <p className="text-cyan-300 text-[10px] font-black uppercase tracking-[0.4em]">Guardian Status: Active</p>
               </div>
               <h1 className="text-white text-4xl font-black tracking-tighter">
                 Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">{data.user.name.split(' ')[0]}!</span>
@@ -103,59 +101,13 @@ const Home: React.FC<Props> = ({ onNavigate }) => {
           <ActionCircle icon={<ICONS.Layers />} label="Predict" color="bg-purple-600 shadow-purple-200" onClick={() => onNavigate('predictor')} />
         </div>
 
-        <section className="animate-in slide-in-from-bottom duration-700 delay-100">
-          <div className="grid grid-cols-1 gap-6">
-            <div 
-              onClick={() => onNavigate('predictor')}
-              className="relative p-8 rounded-[3rem] overflow-hidden bg-[#020617] group cursor-pointer border-4 border-white shadow-2xl"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/40 to-blue-900/40 opacity-40" />
-              <div className="relative z-10">
-                 <div className="flex items-center space-x-2 mb-4">
-                  <ICONS.Sparkles size={16} className="text-cyan-400" />
-                  <span className="text-cyan-400 text-[10px] font-black uppercase tracking-[0.3em]">AI Future Labs</span>
-                </div>
-                <h3 className="text-white text-2xl font-black mb-2 tracking-tight">Impact Predictor</h3>
-                <p className="text-cyan-100/60 text-xs font-medium leading-relaxed max-w-[80%]">
-                  Predict the environmental consequences of global actions using advanced AI modeling.
-                </p>
-                <div className="mt-6 flex items-center text-cyan-400 space-x-2 group-hover:translate-x-2 transition-transform">
-                  <span className="text-[10px] font-black uppercase tracking-widest">Run Simulation</span>
-                  <ICONS.ChevronRight size={14} strokeWidth={3} />
-                </div>
-              </div>
-            </div>
-
-            <div 
-              onClick={() => onNavigate('ai')}
-              className="relative p-8 rounded-[3rem] overflow-hidden bg-[#0a0f2b] group cursor-pointer border-4 border-white shadow-2xl"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/50 to-blue-900/50 opacity-40" />
-              <div className="relative z-10">
-                 <div className="flex items-center space-x-2 mb-4">
-                  <ICONS.Sparkles size={16} className="text-indigo-400" />
-                  <span className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em]">EcoPulse AI</span>
-                </div>
-                <h3 className="text-white text-2xl font-black mb-2 tracking-tight">Marine Intelligence</h3>
-                <p className="text-indigo-100/60 text-xs font-medium leading-relaxed max-w-[80%]">
-                  Consult our intelligent guide for pollution analysis, conservation tips, and ecosystem insights.
-                </p>
-                <div className="mt-6 flex items-center text-indigo-400 space-x-2 group-hover:translate-x-2 transition-transform">
-                  <span className="text-[10px] font-black uppercase tracking-widest">Chat with AI</span>
-                  <ICONS.ChevronRight size={14} strokeWidth={3} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-black text-slate-800 tracking-tight uppercase tracking-[0.1em]">Ecosystem Pulse</h2>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <GlassStat icon={<ICONS.FileText className="text-cyan-600" />} label="Pollution Sites" value={data.stats.reports} desc="Logged & Verified" />
-            <GlassStat icon={<ICONS.User className="text-blue-600" />} label="Active Heroes" value={data.stats.activeUsers} desc="Patrolling Oceans" />
+            <GlassStat icon={<ICONS.FileText className="text-cyan-600" />} label="Local Reports" value={data.stats.reports} desc="Secure On-Device Storage" />
+            <GlassStat icon={<ICONS.User className="text-blue-600" />} label="Heroes Online" value={data.stats.activeUsers} desc="Community Impact" />
           </div>
         </section>
 
@@ -167,9 +119,16 @@ const Home: React.FC<Props> = ({ onNavigate }) => {
             </button>
           </div>
           <div className="space-y-4">
-            {data.recentActivity.map((activity, idx) => (
-              <FluidActivityItem key={activity.id} activity={activity} index={idx} />
-            ))}
+            {data.recentActivity && data.recentActivity.length > 0 ? (
+              data.recentActivity.map((activity, idx) => (
+                <FluidActivityItem key={activity.id} activity={activity} index={idx} />
+              ))
+            ) : (
+              <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm text-center">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">No Waves Detected</p>
+                <p className="text-xs text-slate-300 font-medium">Be the first to create an impact locally.</p>
+              </div>
+            )}
           </div>
         </section>
       </div>

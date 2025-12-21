@@ -10,7 +10,6 @@ import Education from './screens/Education';
 import Profile from './screens/Profile';
 import ProjectInfo from './screens/ProjectInfo';
 import FutureWaveSimulator from './screens/ImpactPredictor';
-import EcoPodcastGenerator from './screens/PodcastGenerator';
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
@@ -29,7 +28,6 @@ const App: React.FC = () => {
       case 'profile': return <Profile onNavigate={setCurrentScreen} />;
       case 'about': return <ProjectInfo onNavigate={setCurrentScreen} />;
       case 'predictor': return <FutureWaveSimulator onNavigate={setCurrentScreen} />;
-      case 'podcast': return <EcoPodcastGenerator onNavigate={setCurrentScreen} />;
       default: return <Home onNavigate={setCurrentScreen} />;
     }
   };
