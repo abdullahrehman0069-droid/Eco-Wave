@@ -1,0 +1,9 @@
+{
+  "name": "EcoWave - Marine Pollution Reporting & Conservation",
+  "description": "A comprehensive mobile-first platform for reporting marine pollution, joining cleanup events, learning about ocean conservation, and engaging with AI-powered assistance.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
