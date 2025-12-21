@@ -1,5 +1,5 @@
 
-export type Screen = 'home' | 'report' | 'ai' | 'events' | 'education' | 'profile';
+export type Screen = 'home' | 'report' | 'ai' | 'events' | 'education' | 'profile' | 'about' | 'predictor' | 'podcast';
 
 export enum Severity {
   LOW = 'Low',

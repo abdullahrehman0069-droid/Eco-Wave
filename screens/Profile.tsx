@@ -17,8 +17,8 @@ const Profile: React.FC<Props> = ({ onNavigate }) => {
   }, []);
 
   if (!data) return (
-    <div className="flex items-center justify-center min-h-screen text-slate-400">
-      <p className="font-bold">Fetching Profile...</p>
+    <div className="flex items-center justify-center min-h-screen bg-[#020617] text-cyan-400">
+      <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin" />
     </div>
   );
 
@@ -27,74 +27,77 @@ const Profile: React.FC<Props> = ({ onNavigate }) => {
   const pointsToNext = 500 - (user.points % 500);
 
   return (
-    <div className="animate-in fade-in duration-500 bg-slate-50 min-h-screen">
-      {/* Profile Header */}
-      <div className={`bg-gradient-to-br ${GRADIENTS.profile} pt-16 pb-20 px-8 relative text-white rounded-b-[4rem] shadow-2xl overflow-hidden`}>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none" />
+    <div className="animate-in fade-in duration-700 pb-32 bg-[#f8fafc] min-h-screen">
+      {/* Immersive Header */}
+      <div className="relative h-[400px] overflow-hidden bg-[#020617]">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-900 via-blue-900 to-[#020617]" />
         
-        <div className="relative z-10 flex justify-between items-start mb-8">
-          <div className="flex items-center space-x-5">
-            <div className="w-20 h-20 bg-white/20 backdrop-blur-xl rounded-[2rem] flex items-center justify-center text-5xl shadow-2xl border border-white/30 transform hover:rotate-6 transition-transform">
+        {/* Floating Light Rays */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-px h-full bg-cyan-400 blur-xl animate-pulse" />
+          <div className="absolute top-0 right-1/3 w-px h-full bg-blue-400 blur-2xl animate-pulse [animation-delay:2s]" />
+        </div>
+
+        <div className="relative z-10 pt-16 px-8 flex flex-col items-center">
+          <div className="relative group mb-6">
+            <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 rounded-[3rem] blur opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+            <div className="relative w-32 h-32 bg-[#0e7490] backdrop-blur-3xl rounded-[2.8rem] flex items-center justify-center text-6xl shadow-2xl border border-white/20 transform hover:scale-105 transition-transform duration-500">
               {user.avatar}
             </div>
-            <div>
-              <h1 className="text-2xl font-black tracking-tight">{user.name}</h1>
-              <div className="flex items-center space-x-2 mt-1">
-                <span className="text-[10px] font-black uppercase tracking-widest bg-white/20 px-2 py-0.5 rounded-full">Global Rank #{user.rank}</span>
-              </div>
+            <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center border-4 border-[#020617] text-xl">
+              🌊
             </div>
           </div>
-          <button className="p-3 bg-white/10 rounded-2xl border border-white/20 active:scale-90 transition-transform">
-            <ICONS.Info size={24} />
-          </button>
+
+          <h1 className="text-white text-3xl font-black tracking-tighter mb-1">{user.name}</h1>
+          <div className="bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 flex items-center space-x-2">
+            <ICONS.Trophy size={14} className="text-amber-400" />
+            <span className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Rank #{user.rank} Global</span>
+          </div>
         </div>
 
-        {/* Key Stats Bar */}
-        <div className="grid grid-cols-3 gap-4 relative z-10">
-          <StatBox icon={<ICONS.Trophy size={18} />} label="Level" value={user.level} />
-          <StatBox icon={<ICONS.Star size={18} />} label="Points" value={user.points} />
-          <StatBox icon={<ICONS.Zap size={18} />} label="Streak" value={`${user.streak} Days`} />
+        <div className="absolute bottom-0 left-0 right-0 leading-[0]">
+          <svg className="relative block w-full h-[60px]" viewBox="0 24 150 28" preserveAspectRatio="none">
+            <path d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" fill="#f8fafc" />
+          </svg>
         </div>
       </div>
 
-      {/* Progress Card Overlay */}
-      <div className="px-6 -mt-10 relative z-20">
-        <div className="bg-white p-8 rounded-[3rem] shadow-2xl shadow-slate-300/60 border border-slate-100">
+      {/* Level Progress Overlay */}
+      <div className="px-6 -mt-20 relative z-20">
+        <div className="bg-white p-8 rounded-[3.5rem] shadow-[0_25px_50px_rgba(0,0,0,0.1)] border border-slate-50">
           <div className="flex justify-between items-end mb-4">
             <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Next Milestone</p>
-              <h4 className="text-xl font-black text-slate-800 mt-1">
-                Level {user.level + 1} 
-                <span className="text-slate-300 font-bold ml-2 text-sm">/ {pointsToNext} pts away</span>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Growth Phase</p>
+              <h4 className="text-2xl font-black text-slate-800 tracking-tighter mt-1">
+                Level {user.level}
+                <span className="text-slate-300 font-bold ml-2 text-sm italic">Next in {pointsToNext} XP</span>
               </h4>
             </div>
-            <span className="text-blue-600 font-black text-lg bg-blue-50 px-3 py-1 rounded-2xl">{Math.round(progress)}%</span>
+            <div className="text-right">
+              <span className="text-3xl font-black text-indigo-600">{Math.round(progress)}%</span>
+            </div>
           </div>
-          <div className="h-5 bg-slate-50 rounded-full overflow-hidden p-1.5 border border-slate-100 shadow-inner">
+          <div className="h-6 bg-slate-50 rounded-full overflow-hidden p-1 shadow-inner border border-slate-100">
             <div 
-              className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transition-all duration-1500 ease-out" 
+              className="h-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-500 rounded-full transition-all duration-1500 relative overflow-hidden" 
               style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="flex justify-between mt-4 text-[10px] font-bold text-slate-400">
-            <span>{user.points % 500} XP EARNED</span>
-            <span className="flex items-center text-amber-500">
-              <ICONS.Star size={12} className="mr-1" />
-              BIG REWARD AT LVL {user.level + 1}
-            </span>
+            >
+              <div className="absolute inset-0 opacity-20 animate-[wave_4s_infinite_linear] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat-x" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Profile Tabs */}
-      <div className="px-6 mt-12 pb-24">
-        <div className="flex bg-slate-200/50 p-1.5 rounded-[2rem] mb-8">
+      {/* Dynamic Content Tabs */}
+      <div className="px-6 mt-12 pb-32">
+        <div className="flex bg-slate-200/40 p-1.5 rounded-[2.5rem] mb-10">
           {(['Achievements', 'Activity', 'Leaderboard'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-grow py-4 text-xs font-black rounded-2xl transition-all ${
-                activeTab === tab ? 'bg-white text-blue-600 shadow-lg' : 'text-slate-500'
+              className={`flex-grow py-4 text-[10px] font-black rounded-[1.8rem] transition-all ${
+                activeTab === tab ? 'bg-white text-indigo-600 shadow-xl' : 'text-slate-400'
               }`}
             >
               {tab.toUpperCase()}
@@ -102,42 +105,28 @@ const Profile: React.FC<Props> = ({ onNavigate }) => {
           ))}
         </div>
 
-        <div className="min-h-[300px]">
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           {activeTab === 'Achievements' && (
-            <div className="grid grid-cols-2 gap-4 animate-in slide-in-from-bottom duration-500">
+            <div className="grid grid-cols-2 gap-4">
               {achievements.map(ach => (
-                <AchievementBadge key={ach.id} achievement={ach} />
+                <SeaAchievement key={ach.id} achievement={ach} />
               ))}
             </div>
           )}
 
           {activeTab === 'Activity' && (
-            <div className="space-y-4 animate-in slide-in-from-bottom duration-500">
-              {activities.map(activity => (
-                <ActivityRow key={activity.id} activity={activity} />
+            <div className="space-y-4">
+              {activities.map((activity, i) => (
+                <LiquidActivityItem key={activity.id} activity={activity} index={i} />
               ))}
             </div>
           )}
 
           {activeTab === 'Leaderboard' && (
-            <div className="space-y-3 animate-in slide-in-from-bottom duration-500">
-              {leaderboard.map(lb => (
-                <LeaderboardRow key={lb.name} user={lb} />
+            <div className="space-y-4">
+              {leaderboard.map((lb, i) => (
+                <GlassRankRow key={lb.name} user={lb} index={i} />
               ))}
-              
-              {/* Rewards CTA */}
-              <div className={`mt-10 p-8 rounded-[3rem] bg-gradient-to-br ${GRADIENTS.reward} text-white shadow-2xl flex items-center justify-between group cursor-pointer active:scale-95 transition-all`}>
-                <div className="flex items-center space-x-5">
-                  <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-3xl shadow-lg border border-white/30 group-hover:rotate-12 transition-transform">
-                    🎁
-                  </div>
-                  <div>
-                    <h4 className="font-black text-lg leading-tight">Reward Hub</h4>
-                    <p className="text-[11px] font-medium opacity-90 mt-1 uppercase tracking-widest">Redeem for physical gear</p>
-                  </div>
-                </div>
-                <ICONS.ChevronRight size={28} className="group-hover:translate-x-2 transition-transform" />
-              </div>
             </div>
           )}
         </div>
@@ -146,82 +135,70 @@ const Profile: React.FC<Props> = ({ onNavigate }) => {
   );
 };
 
-const StatBox = ({ icon, label, value }: { icon: any, label: string, value: any }) => (
-  <div className="bg-white/10 backdrop-blur-xl rounded-[2rem] p-4 border border-white/10 shadow-lg hover:bg-white/20 transition-colors">
-    <div className="flex items-center space-x-2 opacity-80 mb-1.5">
-      {icon}
-      <span className="text-[9px] font-black uppercase tracking-[0.2em]">{label}</span>
-    </div>
-    <span className="text-xl font-black">{value}</span>
-  </div>
-);
-
-const AchievementBadge: React.FC<{ achievement: Achievement }> = ({ achievement }) => (
-  <div className={`p-5 rounded-[2.5rem] border transition-all ${achievement.isLocked ? 'bg-slate-50 border-slate-200 grayscale opacity-60' : 'bg-white border-slate-100 shadow-xl shadow-slate-200/50 hover:scale-105'} flex flex-col items-center text-center space-y-3`}>
-    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-lg bg-gradient-to-br ${achievement.gradient}`}>
+const SeaAchievement = ({ achievement }: { achievement: Achievement }) => (
+  <div className={`p-6 rounded-[3rem] border transition-all relative overflow-hidden group ${
+    achievement.isLocked ? 'bg-slate-50 border-slate-100 grayscale opacity-60' : 'bg-white border-slate-50 shadow-2xl hover:-translate-y-1'
+  }`}>
+    {!achievement.isLocked && (
+      <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${achievement.gradient} opacity-5 blur-2xl group-hover:opacity-20 transition-opacity`} />
+    )}
+    <div className={`w-16 h-16 rounded-[1.8rem] flex items-center justify-center text-4xl shadow-xl bg-gradient-to-br mb-4 ${
+      achievement.isLocked ? 'from-slate-200 to-slate-300' : achievement.gradient
+    }`}>
       {achievement.icon}
     </div>
-    <div className="space-y-1">
-      <h5 className="text-xs font-black text-slate-800 tracking-tight">{achievement.name}</h5>
-      <p className="text-[10px] text-slate-400 font-bold leading-tight line-clamp-2">{achievement.description}</p>
-    </div>
-    <div className={`text-[9px] font-black uppercase tracking-tighter px-3 py-1 rounded-full ${achievement.isLocked ? 'bg-slate-200 text-slate-500' : 'bg-blue-50 text-blue-600'}`}>
-      {achievement.isLocked ? `UNlocks at ${achievement.points} pts` : achievement.earnedDate}
+    <h5 className="text-sm font-black text-slate-800 tracking-tight leading-none mb-1">{achievement.name}</h5>
+    <p className="text-[10px] text-slate-400 font-bold leading-tight mb-4">{achievement.description}</p>
+    <div className="text-[9px] font-black uppercase tracking-widest text-slate-300">
+      {achievement.isLocked ? 'Discovery Pending' : achievement.earnedDate}
     </div>
   </div>
 );
 
-const ActivityRow: React.FC<{ activity: Activity }> = ({ activity }) => (
-  <div className="flex items-center space-x-5 bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">
-    <div className={`p-3 rounded-2xl shrink-0 ${
-      activity.type === 'report' ? 'bg-cyan-100 text-cyan-600' :
-      activity.type === 'event' ? 'bg-teal-100 text-teal-600' :
-      activity.type === 'education' ? 'bg-purple-100 text-purple-600' : 'bg-indigo-100 text-indigo-600'
+const LiquidActivityItem = ({ activity, index }: { activity: Activity, index: number }) => (
+  <div className="flex items-center space-x-5 bg-white p-6 rounded-[2.5rem] border border-slate-50 shadow-xl shadow-slate-200/20 group animate-in slide-in-from-bottom-2 duration-300" style={{ animationDelay: `${index * 50}ms` }}>
+    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-lg ${
+      activity.type === 'report' ? 'bg-cyan-50 text-cyan-600' :
+      activity.type === 'event' ? 'bg-teal-50 text-teal-600' :
+      activity.type === 'education' ? 'bg-purple-50 text-purple-600' : 'bg-blue-50 text-blue-600'
     }`}>
-      {activity.type === 'report' ? <ICONS.FileText size={20} /> :
-       activity.type === 'event' ? <ICONS.Calendar size={20} /> :
-       activity.type === 'education' ? <ICONS.BookOpen size={20} /> : <ICONS.Sparkles size={20} />}
+      <ICONS.Zap size={24} />
     </div>
     <div className="flex-grow">
-      <h6 className="text-sm font-black text-slate-800">{activity.title}</h6>
-      <p className="text-[11px] text-slate-400 font-bold mt-0.5">{activity.context} • {activity.timestamp}</p>
+      <h6 className="text-sm font-black text-slate-800 tracking-tight">{activity.title}</h6>
+      <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-0.5">{activity.context} • {activity.timestamp}</p>
     </div>
     <div className="text-right">
-      <span className="text-sm font-black text-emerald-500">+{activity.points}</span>
-      <p className="text-[8px] font-bold text-slate-300 uppercase tracking-tighter">pts</p>
+      <span className="text-lg font-black text-emerald-500">+{activity.points}</span>
     </div>
   </div>
 );
 
-const LeaderboardRow: React.FC<{ user: LeaderboardUser }> = ({ user }) => {
-  const isTop3 = user.rank <= 3;
-  const rankIcon = user.rank === 1 ? '🥇' : user.rank === 2 ? '🥈' : user.rank === 3 ? '🥉' : null;
-  const gradient = user.rank === 1 ? 'from-amber-400 to-yellow-600' : 
-                   user.rank === 2 ? 'from-slate-300 to-slate-500' : 
-                   user.rank === 3 ? 'from-orange-400 to-orange-700' : 'from-slate-100 to-slate-200';
-
-  return (
-    <div className={`flex items-center p-4 rounded-[2rem] border transition-all ${
-      user.isCurrentUser ? 'bg-blue-600 border-blue-700 shadow-xl shadow-blue-200 text-white' : 'bg-white border-slate-100'
+const GlassRankRow = ({ user, index }: { user: LeaderboardUser, index: number }) => (
+  <div className={`flex items-center p-5 rounded-[2.5rem] border transition-all ${
+    user.isCurrentUser ? 'bg-indigo-600 border-indigo-700 shadow-2xl text-white' : 'bg-white border-slate-100 shadow-lg'
+  }`}>
+    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black mr-4 ${
+      index < 3 ? 'bg-amber-400 text-white shadow-lg' : 'bg-slate-50 text-slate-400'
     }`}>
-      <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black mr-4 text-sm ${isTop3 ? 'bg-gradient-to-br ' + gradient + ' text-white shadow-lg' : 'bg-slate-50 text-slate-400'}`}>
-        {rankIcon || `#${user.rank}`}
-      </div>
-      <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center text-2xl mr-4 border-2 border-slate-50 shadow-inner">
-        {user.avatar}
-      </div>
-      <div className="flex-grow">
-        <h6 className={`text-sm font-black tracking-tight ${user.isCurrentUser ? 'text-white' : 'text-slate-800'}`}>
-          {user.name} {user.isCurrentUser && '(YOU)'}
-        </h6>
-        <p className={`text-[10px] font-bold ${user.isCurrentUser ? 'text-blue-200' : 'text-slate-400'}`}>LEVEL {user.level} STEWARD</p>
-      </div>
-      <div className="text-right">
-        <span className={`text-sm font-black ${user.isCurrentUser ? 'text-white' : 'text-slate-800'}`}>{user.points.toLocaleString()}</span>
-        <p className={`text-[8px] font-bold ${user.isCurrentUser ? 'text-blue-200' : 'text-slate-300'}`}>TOTAL XP</p>
-      </div>
+      {index + 1}
     </div>
-  );
-};
+    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-3xl mr-4 border border-slate-100 shadow-inner overflow-hidden">
+      {user.avatar}
+    </div>
+    <div className="flex-grow">
+      <h6 className={`text-sm font-black tracking-tight ${user.isCurrentUser ? 'text-white' : 'text-slate-800'}`}>
+        {user.name}
+      </h6>
+      <p className={`text-[9px] font-black uppercase tracking-widest ${user.isCurrentUser ? 'text-indigo-200' : 'text-slate-300'}`}>
+        Lvl {user.level} Guardian
+      </p>
+    </div>
+    <div className="text-right">
+      <span className="text-sm font-black tracking-tight">{user.points.toLocaleString()}</span>
+      <p className={`text-[8px] font-black uppercase ${user.isCurrentUser ? 'text-indigo-200' : 'text-slate-300'}`}>XP</p>
+    </div>
+  </div>
+);
 
 export default Profile;

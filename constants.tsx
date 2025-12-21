@@ -22,7 +22,11 @@ import {
   MessageSquare,
   Share2,
   Heart,
-  Play
+  Play,
+  Github,
+  FileJson,
+  Layers,
+  Code2
 } from 'lucide-react';
 
 export const COLORS = {
@@ -44,6 +48,7 @@ export const GRADIENTS = {
   events: 'from-teal-500 to-cyan-600',
   education: 'from-purple-500 to-indigo-500',
   reward: 'from-amber-400 via-orange-500 to-pink-500',
+  about: 'from-slate-700 to-slate-900',
 };
 
 export const ICONS = {
@@ -68,5 +73,9 @@ export const ICONS = {
   MessageSquare,
   Share2,
   Heart,
-  Play
+  Play,
+  Github,
+  FileJson,
+  Layers,
+  Code2
 };

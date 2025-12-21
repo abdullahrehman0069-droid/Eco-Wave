@@ -19,8 +19,8 @@ const STORAGE_JOINED_EVENTS = 'ecowave_joined_events_v2';
 
 const INITIAL_USER: User = {
   id: 'u1',
-  name: 'Alex Rivera',
-  email: 'alex@ecowave.org',
+  name: 'Abdullah',
+  email: 'abdullah@ecowave.org',
   avatar: '🌊',
   points: 1250,
   level: 3,
