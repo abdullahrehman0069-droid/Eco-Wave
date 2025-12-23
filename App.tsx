@@ -33,46 +33,45 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen max-w-md mx-auto bg-slate-50 relative shadow-2xl overflow-x-hidden">
-      <main className="flex-grow mb-20">
+    <div className="flex flex-col min-h-screen max-w-md mx-auto bg-[#020617] relative shadow-[0_0_100px_rgba(0,0,0,1)] overflow-x-hidden border-x border-white/5">
+      {/* Background Ambient Glows */}
+      <div className="glow-blob w-64 h-64 bg-cyan-500/10 top-20 -left-20" />
+      <div className="glow-blob w-80 h-80 bg-purple-500/10 bottom-40 -right-40" />
+      
+      <main className="flex-grow relative z-10">
         {renderScreen()}
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 safe-bottom z-50">
-        <div className="flex justify-between items-center h-16 px-1">
+      {/* Futuristic Floating Navigation */}
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[94%] max-w-[400px] z-50">
+        <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] flex justify-between items-center h-20 px-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <NavItem 
-            icon={<ICONS.Home size={16} />} 
-            label="Home" 
+            icon={<ICONS.Home size={20} />} 
             isActive={currentScreen === 'home'} 
             onClick={() => setCurrentScreen('home')} 
           />
           <NavItem 
-            icon={<ICONS.Sparkles size={16} />} 
-            label="AI Chat" 
+            icon={<ICONS.Sparkles size={20} />} 
             isActive={currentScreen === 'ai'} 
             onClick={() => setCurrentScreen('ai')} 
           />
           <NavItem 
-            icon={<ICONS.Layers size={16} />} 
-            label="Simulate" 
+            icon={<ICONS.Layers size={20} />} 
             isActive={currentScreen === 'predictor'} 
             onClick={() => setCurrentScreen('predictor')} 
           />
           <NavItem 
-            icon={<ICONS.Calendar size={16} />} 
-            label="Events" 
+            icon={<ICONS.Calendar size={20} />} 
             isActive={currentScreen === 'events'} 
             onClick={() => setCurrentScreen('events')} 
           />
           <NavItem 
-            icon={<ICONS.User size={16} />} 
-            label="Profile" 
+            icon={<ICONS.User size={20} />} 
             isActive={currentScreen === 'profile'} 
             onClick={() => setCurrentScreen('profile')} 
           />
           <NavItem 
-            icon={<ICONS.Info size={16} />} 
-            label="About" 
+            icon={<ICONS.Info size={20} />} 
             isActive={currentScreen === 'about'} 
             onClick={() => setCurrentScreen('about')} 
           />
@@ -84,22 +83,21 @@ const App: React.FC = () => {
 
 interface NavItemProps {
   icon: React.ReactNode;
-  label: string;
   isActive: boolean;
   onClick: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, label, isActive, onClick }) => (
+const NavItem: React.FC<NavItemProps> = ({ icon, isActive, onClick }) => (
   <button 
     onClick={onClick}
-    className={`flex flex-col items-center justify-center space-y-1 w-full transition-all ${
-      isActive ? 'text-cyan-600 scale-110' : 'text-slate-400 opacity-80'
+    className={`relative flex items-center justify-center w-11 h-11 rounded-2xl transition-all duration-300 ${
+      isActive ? 'text-cyan-400 bg-white/5 scale-110' : 'text-slate-500 hover:text-slate-300 active:scale-90'
     }`}
   >
-    <div className={`p-1.5 rounded-xl transition-colors ${isActive ? 'bg-cyan-50' : ''}`}>
-      {icon}
-    </div>
-    <span className="text-[8px] font-black uppercase tracking-tighter whitespace-nowrap">{label}</span>
+    {isActive && (
+      <div className="absolute -bottom-2 w-1 h-1 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]" />
+    )}
+    {icon}
   </button>
 );
 

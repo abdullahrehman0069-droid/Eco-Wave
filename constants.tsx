@@ -26,29 +26,32 @@ import {
   Github,
   FileJson,
   Layers,
-  Code2
+  Code2,
+  Activity,
+  Waves
 } from 'lucide-react';
 
 export const COLORS = {
-  primary: '#0891b2',
-  secondary: '#06b6d4',
-  dark: '#164e63',
-  light: '#ecfeff',
-  accent: '#14b8a6',
-  success: '#10b981',
-  warning: '#f59e0b',
-  danger: '#ef4444',
+  primary: '#22d3ee', // Neon Cyan
+  secondary: '#818cf8', // Electric Indigo
+  accent: '#a855f7', // Vivid Purple
+  success: '#10b981', // Emerald
+  warning: '#f59e0b', // Amber
+  danger: '#f43f5e', // Rose
+  background: '#020617', // Obsidian
 };
 
 export const GRADIENTS = {
-  home: 'from-cyan-500 to-blue-600',
-  profile: 'from-blue-600 via-purple-600 to-pink-600',
-  report: 'from-cyan-500 to-blue-600',
-  ai: 'from-indigo-500 to-purple-500',
-  events: 'from-teal-500 to-cyan-600',
-  education: 'from-purple-500 to-indigo-500',
-  reward: 'from-amber-400 via-orange-500 to-pink-500',
-  about: 'from-slate-700 to-slate-900',
+  home: 'from-cyan-500 via-blue-600 to-indigo-700',
+  profile: 'from-indigo-600 via-purple-600 to-pink-600',
+  report: 'from-emerald-400 to-cyan-500',
+  ai: 'from-fuchsia-600 to-purple-700',
+  events: 'from-orange-500 to-red-600',
+  education: 'from-blue-500 to-indigo-600',
+  predictor: 'from-slate-900 via-cyan-900 to-slate-900',
+  // Fix: Added missing 'about' and 'podcast' gradient keys to match Screen type and usage in ProjectInfo.tsx
+  about: 'from-slate-800 via-slate-900 to-black',
+  podcast: 'from-violet-600 via-indigo-700 to-blue-900',
 };
 
 export const ICONS = {
@@ -77,5 +80,7 @@ export const ICONS = {
   Github,
   FileJson,
   Layers,
-  Code2
+  Code2,
+  Activity,
+  Waves
 };
